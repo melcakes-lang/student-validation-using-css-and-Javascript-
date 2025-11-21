@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Information For</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+  body{
+    margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #ffecd2, #fcb69f, #c9ffbf, #ffafbd);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    h1 {
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: auto;
+      background-color: white;
+      border: 2px solid #555;
+    }
+
+    td {
+      padding: 10px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .required {
+      color: red;
+    }
+
+    input, select {
+      padding: 5px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      text-transform: uppercase;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.85em;
+    }
+
+    .error-border {
+      border: 2px solid red !important;
+    }
+    .success-border {
+      border: 2px solid green !important;
+    }
+
+    .buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="submit"], input[type="reset"] {
+      padding: 8px 20px;
+      margin: 5px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      background-color: green;
+      color: white;
+      border: none;
+    }
+
+    input[type="reset"] {
+      background-color: crimson;
+      color: white;
+      border: none;
+    }
+
+    /* SUCCESS POPUP CENTER */
+    #popupSuccess {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 25px 30px;
+      border-radius: 18px;
+      text-align: center;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.25);
+      font-size: 18px;
+      font-weight: bold;
+      width: 300px;
+      animation: fadeInUp 0.4s ease-out;
+      z-index: 9999;
+    }
+
+    #popupSuccess .check {
+      font-size: 40px;
+      color: green;
+      margin-bottom: 10px;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translate(-50%, -30px); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Student Information Form</h1>
+
+<form id="studentForm">
+<table border="1" cellpadding="10" cellspacing="1" align="center">
+
+  <tr>
+    <td><label>Student Name <span class="required">*</span></label></td>
+    <td>
+      <input type="text" id="firstname" placeholder="First Name">
+      -
+      <input type="text" id="middlename" placeholder="Middle Name/Initial">
+      -
+      <input type="text" id="lastname" placeholder="Last Name">
+      <br><span id="error-name" class="error"></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Date of Birth <span class="required">*</span></td>
+    <td><input type="date" id="dob"></td>
+  </tr>
+
+  <tr>
+    <td>Age <span class="required">*</span></td>
+    <td><input type="number" id="age" min="1">
+    <br><span id="error-age" class="error"></span></td>
+  </tr>
+
+  <tr>
+    <td>Gender <span class="required">*</span></td>
+    <td>
+      <input type="radio" name="gender" value="Male"> Male
+      <input type="radio" name="gender" value="Female"> Female
+      <input type="radio" name="gender" value="Others"> Others
+    </td>
+  </tr>
+
+  <tr>
+    <td>Home Address <span class="required">*</span></td>
+    <td><input type="text" id="address">
+    <br><span id="error-address" class="error"></span></td>
+  </tr>
+
+  <tr>
+    <td>Contact Number <span class="required">*</span></td>
+    <td>
+      <input type="text" value="+63" size="3" readonly> -
+      <input type="text" id="contact" placeholder="9123456789">
+      <br><span id="error-contact" class="error"></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Email Address <span class="required">*</span></td>
+    <td>
+      <input type="email" id="email" placeholder="Romel06@Gmail.com">
+      <br><span id="error-email" class="error"></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Student ID <span class="required">*</span></td>
+    <td>
+      <input type="text" id="studentid">
+      <br><span id="error-id" class="error"></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Year Level <span class="required">*</span></td>
+    <td>
+      <select id="year">
+        <option value="">Select Year Level</option>
+        <option>Freshmen</option>
+        <option>2nd Year</option>
+        <option>3rd Year</option>
+        <option>4th Year</option>
+      </select>
+      <br><span id="error-year" class="error"></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Institute <span class="required">*</span></td>
+    <td>
+      <input type="checkbox" name="inst" value="ICS"> ICS
+      <input type="checkbox" name="inst" value="ITE"> ITE
+      <input type="checkbox" name="inst" value="IBE"> IBE
+      <br><span id="error-inst" class="error"></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Program <span class="required">*</span></td>
+    <td>
+      <select id="program">
+        <option value="">Select Program</option>
+        <option>Bachelor of Science in Information Technology</option>
+        <option>Bachelor of Science in Computer Engineering</option>
+        <option>Bachelor of Secondary Education</option>
+        <option>Bachelor of Elementary Education</option>
+        <option>Bachelor of General Education</option>
+        <option>Bachelor of Technology and Livelihood Education</option>
+      </select>
+      <br><span id="error-prog" class="error"></span>
+    </td>
+  </tr>
+
+</table>
+
+<div class="buttons">
+  <input type="submit" value="Submit Form">
+  <input type="reset" value="Clear Form">
+</div>
+</form>
+
+<!-- SUCCESS POPUP -->
+<div id="popupSuccess">
+  <div class="check">✔</div>
+  Thank you for registration!
+</div>
+
+<script>
+$(document).ready(function () {
+
+  // FIRST + LAST NAME (letters only)
+  $("#firstname, #lastname").on("keyup blur", function () {
+    let value = $(this).val();
+    if (value === "" || !/^[A-Za-z\s]+$/.test(value)) {
+      $(this).removeClass("success-border").addClass("error-border");
+      $("#error-name").text("⚠ Please enter letters only");
+    } else {
+      $(this).removeClass("error-border").addClass("success-border");
+      $("#error-name").text("");
+    }
+  });
+
+  // MIDDLE NAME / INITIAL
+  $("#middlename").on("keyup blur", function () {
+    let value = $(this).val();
+    let pattern = /^[A-Za-z]+(\.\s?)?$/;
+
+    if (value === "" || !pattern.test(value)) {
+      $(this).removeClass("success-border").addClass("error-border");
+      $("#error-name").text("⚠ Middle name must be letters or one initial with dot");
+    } else {
+      $(this).removeClass("error-border").addClass("success-border");
+      $("#error-name").text("");
+    }
+  });
+
+  // CONTACT NUMBER
+  $("#contact").on("keyup blur", function () {
+    let value = $(this).val();
+    if (value === "" || !/^[0-9]+$/.test(value)) {
+      $(this).removeClass("success-border").addClass("error-border");
+      $("#error-contact").text("⚠ Please enter numbers only");
+    } else {
+      $(this).removeClass("error-border").addClass("success-border");
+      $("#error-contact").text("");
+    }
+  });
+
+  // EMAIL VALIDATION
+  $("#email").on("keyup blur", function () {
+    let pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!pattern.test($(this).val())) {
+      $(this).addClass("error-border").removeClass("success-border");
+      $("#error-email").text("⚠ Enter a valid email");
+    } else {
+      $(this).addClass("success-border").removeClass("error-border");
+      $("#error-email").text("");
+    }
+  });
+
+  // ADDRESS
+  $("#address").on("keyup blur", function () {
+    if ($(this).val() === "") {
+      $(this).addClass("error-border").removeClass("success-border");
+      $("#error-address").text("⚠ Address cannot be empty");
+    } else {
+      $(this).addClass("success-border").removeClass("error-border");
+      $("#error-address").text("");
+    }
+  });
+
+  // STUDENT ID
+  $("#studentid").on("keyup blur", function () {
+    let value = $(this).val();
+    let pattern = /^[0-9\-]+$/;
+
+    if (value === "" || !pattern.test(value)) {
+      $(this).addClass("error-border").removeClass("success-border");
+      $("#error-id").text("⚠ Numbers and '-' only");
+    } else {
+      $(this).addClass("success-border").removeClass("error-border");
+      $("#error-id").text("");
+    }
+  });
+
+  // YEAR + PROGRAM simple validation
+  $("#year, #program").on("blur", function () {
+    let id = $(this).attr("id");
+    let errorId = "#error-" + id.replace("program", "prog");
+    if ($(this).val() === "") $(errorId).text("⚠ Required field");
+    else $(errorId).text("");
+  });
+
+// SUBMIT FORM
+$("#studentForm").submit(function (e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    // CHECK REQUIRED TEXT INPUTS
+    $("input[type='text'], input[type='number'], input[type='date'], input[type='email']").each(function () {
+        if ($(this).val().trim() === "") {
+            $(this).addClass("error-border").removeClass("success-border");
+            valid = false;
+        }
+    });
+
+    // CHECK RADIO (Gender)
+    if ($("input[name='gender']:checked").length === 0) {
+        valid = false;
+    }
+
+    // CHECK INSTITUTE CHECKBOX
+    if ($("input[name='inst']:checked").length === 0) {
+        $("#error-inst").text("⚠ Please select at least one institute");
+        valid = false;
+    } else {
+        $("#error-inst").text("");
+    }
+
+    // CHECK YEAR
+    if ($("#year").val() === "") {
+        $("#error-year").text("⚠ Required field");
+        valid = false;
+    } else {
+        $("#error-year").text("");
+    }
+
+    // CHECK PROGRAM
+    if ($("#program").val() === "") {
+        $("#error-prog").text("⚠ Required field");
+        valid = false;
+    } else {
+        $("#error-prog").text("");
+    }
+
+    // ❌ IF ANY ERROR → STOP, DO NOT SHOW POPUP
+    if (!valid) {
+        return;
+    }
+
+    // ✅ ALL GOOD = SHOW POPUP CENTERED
+    $("#popupSuccess").fadeIn();
+
+    setTimeout(function () {
+        $("#popupSuccess").fadeOut();
+    }, 3000);
+
+    // RESET FORM
+    $("#studentForm")[0].reset();
+    $("input, select").removeClass("success-border error-border");
+});
+});
+</script>
+</body>
+</html>
