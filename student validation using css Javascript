@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Information Form</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #ffecd2, #fcb69f, #c9ffbf, #ffafbd);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      text-align: center;
+       
+    }
+    
+    table {
+      border-collapse: collapse;
+      margin: auto;
+      background-color: white;
+      border: 2px solid #555;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: 0.3s ease;
+    }
+
+    table:hover {
+      transform: scale(1.01);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    td {
+      padding: 10px;
+    }
+    */
+    
+
+    label {
+      font-weight: bold;
+    }
+
+    .required {
+      color: red;
+    }
+
+    input, select {
+      padding: 5px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      text-transform: uppercase;
+      transition: border-color 0.3s ease;
+    }
+    /* RED BORDER ONLY WHEN INVALID */
+    input.invalid {
+      border-color: red !important;
+    }
+
+    .buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    input[type="submit"], input[type="reset"] {
+      padding: 8px 20px;
+      margin: 5px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      background-color: green;
+      color: white;
+      border: none;
+    }
+
+    input[type="reset"] {
+      background-color: crimson;
+      color: white;
+      border: none;
+    }
+
+    /*
+       SUCCESS POPUP + BACKDROP BLUR */
+    #popupBlur {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(6px);
+      z-index: 900;
+    }
+
+    #successPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      padding: 25px 40px;
+      background: white;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+      font-size: 20px;
+      font-weight: bold;
+      opacity: 0;
+      transition: 0.35s ease;
+      z-index: 999;
+    }
+
+    #successPopup.show {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .checkmark {
+      font-size: 40px;
+      color: green;
+      margin-bottom: 10px;
+    }
+
+    .error-text {
+      color: red;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Student Information Form</h1>
+ <form id="studentForm">
+    <table border="1" cellpadding="10" cellspacing="1" align="center">
+
+      <tr>
+        <td><label>Student Name <span class="required">*</span></label></td>
+        <td>
+          <input type="text" id="firstname" size="21" placeholder="First Name" required>
+          -
+          <input type="text" id="middlename" size="3" placeholder="Middle N" required>
+          -
+          <input type="text" id="lastname" size="21" placeholder="Last Name" required>
+
+          <div id="nameError" class="error-text"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Date of Birth <span class="required">*</span></td>
+        <td><input type="date" id="dob" required></td>
+      </tr>
+
+      <tr>
+        <td>Age <span class="required">*</span></td>
+        <td><input type="number" id="age" min="1" required></td>
+      </tr>
+
+      <tr>
+        <td>Gender <span class="required">*</span></td>
+        <td>
+          <input type="radio" name="gender" value="Male" required> Male
+          <input type="radio" name="gender" value="Female" required> Female
+           <input type="radio" name="gender" value="Others" required> Others 
+        </td>
+      </tr>
+
+      <tr>
+        <td>Home Address <span class="required">*</span></td>
+        <td><input type="text" size="40" required></td>
+      </tr>
+
+      <tr>
+        <td>Contact Number <span class="required">*</span></td>
+        <td>
+          <input type="text" value="+63" size="3" readonly>
+          -
+          <input type="text" id="contact" maxlength  ="10" size="10" required>
+          <div id="contactError" class="error-text"></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Email Address <span class="required">*</span></td>
+        <td><input type="email" id="email" size="40" required></td>
+      </tr>
+
+      <tr>
+        <td>Student ID <span class="required">*</span></td>
+        <td><input type="text" id="studentid" size="10" required></td>
+      </tr>
+
+      <tr>
+        <td>Year Level <span class="required">*</span></td>
+        <td>
+          <select required>
+            <option value="">Select Year Level</option>
+            <option>Freshmen</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Institute <span class="required">*</span></td>
+        <td>
+          <input type="checkbox" name="inst"> ICS
+          <input type="checkbox" name="inst"> ITE
+          <input type="checkbox" name="inst"> IBE
+        </td>
+      </tr>
+
+      <tr>
+        <td>Program <span class="required">*</span></td>
+        <td>
+          <select required>
+            <option value="">Select Program</option>
+            <option>Bachelor of Science in Information Technology</option>
+            <option>Bachelor of Science in Computer Engineering</option>
+            <option>Bachelor of Secondary Education</option>
+            <option>Bachelor of Elementary Education</option>
+            <option>Bachelor of General Education</option>
+            <option>Bachelor of Technology and Livelihood Education</option>
+          </select>
+        </td>
+      </tr>
+
+    </table>
+
+    <div class="buttons">
+      <input type="submit" value="Submit Form">
+      <input type="reset" value="Clear Form">
+    </div>
+  </form>
+
+  <!-- BLUR LAYER -->
+  <div id="popupBlur"></div>
+
+  <!-- SUCCESS POPUP -->
+  <div id="successPopup">
+    <div class="checkmark">✔</div>
+    Thank you for registration!
+  </div>
+
+<script>
+
+/* INPUT REFERENCES */
+const firstname = document.getElementById("firstname");
+const middlename = document.getElementById("middlename");
+const lastname = document.getElementById("lastname");
+const contact = document.getElementById("contact");
+
+const nameError = document.getElementById("nameError");
+const contactError = document.getElementById("contactError");
+
+/* NAME VALIDATION */
+   
+function validateNameField(field) {
+  field.addEventListener("input", () => {
+    if (/[0-9]/.test(field.value)) {
+      field.classList.add("invalid");
+      nameError.textContent = "Please enter letters only for name fields";
+    } else {
+      field.classList.remove("invalid");
+      nameError.textContent = "";
+    }
+  });
+}
+
+validateNameField(firstname);
+validateNameField(lastname);
+
+/*
+   MIDDLE INITIAL VALIDATION (A or A.)
+    */
+middlename.addEventListener("input", () => {
+  let val = middlename.value.toUpperCase();
+  const pattern = /^[A-Z]\.?$/;
+
+  if (val === "" || pattern.test(val)) {
+    middlename.classList.remove("invalid");
+    nameError.textContent = "";
+  } else {
+    middlename.classList.add("invalid");
+    nameError.textContent = "Middle initial must be 1 letter only (A or A. )";
+  }
+});
+
+/* 
+   CONTACT NUMBER VALIDATION
+    */
+contact.addEventListener("input", () => {
+  if (!/^[0-9]*$/.test(contact.value)) {
+    contact.classList.add("invalid");
+    contactError.textContent = "Please enter numbers only for contact number";
+  } else {
+    contact.classList.remove("invalid");
+    contactError.textContent = "";
+  }
+});
+
+/*
+   FORM SUBMISSION + BLUR POPUP
+    */
+const form = document.getElementById("studentForm");
+const popup = document.getElementById("successPopup");
+const blurBG = document.getElementById("popupBlur");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const invalidField = document.querySelector("input.invalid");
+
+  if (invalidField) {
+    invalidField.scrollIntoView({ behavior: "smooth", block: "center" });
+    alert("Please correct the highlighted fields.");
+    return;
+  }
+
+  blurBG.style.display = "block";
+  popup.classList.add("show");
+
+  setTimeout(() => {
+    popup.classList.remove("show");
+    blurBG.style.display = "none";
+  }, 2000);
+
+  form.reset();
+});
+</script>
+
+</body>
+</html>
